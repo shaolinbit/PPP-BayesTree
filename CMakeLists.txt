@@ -56,7 +56,7 @@ set(HEAD_FILES_utils
 
 aux_source_directory(. SRC_LIST)
 aux_source_directory(./gnssNavigation SRC_LIST_gnssNavigation)
-aux_source_directory(./gnssNavigation SRC_LIST_configReader)
+aux_source_directory(./configReader SRC_LIST_configReader)
 aux_source_directory(./gpstk SRC_LIST_gpstk)
 aux_source_directory(./robustModels SRC_LIST_robustModels)
 aux_source_directory(./slam SRC_LIST_slam)
@@ -66,7 +66,7 @@ aux_source_directory(./utils SRC_LIST_utils)
 
 include_directories(/usr/include/minisam/)
 
-add_executable(pppbayestree ${SRC_LIST} ${SRC_LIST_gnssNavigation} ${SRC_LIST_configReader} ${SRC_LIST_gpstk} ${SRC_LIST_robustModels} ${SRC_LIST_slam} ${SRC_LIST_utils} ${Boost_LIBRARIES})
-
+add_executable(pppbayestree ${SRC_LIST} ${SRC_LIST_gnssNavigation} ${SRC_LIST_configReader} ${SRC_LIST_gpstk} ${SRC_LIST_robustModels} ${SRC_LIST_slam} ${SRC_LIST_utils} ${Boost_LIBRARIES} /usr/lib/libminisam.so)
+target_link_libraries(pppbayestree ${SRC_LIST} ${SRC_LIST_gnssNavigation} ${SRC_LIST_configReader} ${SRC_LIST_gpstk} ${SRC_LIST_robustModels} ${SRC_LIST_slam} ${SRC_LIST_utils} ${Boost_LIBRARIES} /usr/lib/libminisam.so)
 
 

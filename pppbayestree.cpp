@@ -5,12 +5,12 @@
  */
 
 
-#include "minisam/nonlinear/ISAM2.h"
-#include "minisam/nonlinear/NonlinearFactorGraph.h"
-#include "minisam/inference/Symbol.h"
+#include <minisam/nonlinear/ISAM2.h>
+#include <minisam/nonlinear/NonlinearFactorGraph.h>
+#include <minisam/inference/Symbol.h>
 
-#include "minisam/slam/PriorFactor.h"
-#include "minisam/slam/BetweenFactor.h"
+#include <minisam/slam/PriorFactor.h>
+#include <minisam/slam/BetweenFactor.h>
 
 #include "gnssNavigation/GnssData.h"
 #include "gnssNavigation/GnssTools.h"
