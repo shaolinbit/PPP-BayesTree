@@ -21,38 +21,13 @@ message("${Boost_INCLUDE_DIRS}")
 message("${Boost_LIBRARIES}")
 
 
-set(HEAD_FILES_configReader
-	./configReader/ConfDataReader.hpp
-)
-set(HEAD_FILES_gnssNavigation
-	./gnssNavigation/FolderUtils.h
-	./gnssNavigation/GnssBetweenFactor.h
-	./gnssNavigation/GnssData.h
-	./gnssNavigation/GnssPostfit.h
-	./gnssNavigation/gnssStateVec.h
-	./gnssNavigation/GnssTools.h
-	./gnssNavigation/nonBiasStates.h
-	./gnssNavigation/PhaseFactor
-	./gnssNavigation/PhysicalConstants.h
-	./gnssNavigation/PseudorangeFactor.h
 
-)
-
+include_directories(./configReader)
+include_directories(./gnssNavigation)
 include_directories(./gpstk)
-
-set(HEAD_FILES_robustModels
-./robustModels/PseudorangeMaxMix.h
-./robustModels/PseudorangeSwitchFactor
-
-)
-set(HEAD_FILES_slam
-./slam/dataset.h
-
-)
-set(HEAD_FILES_utils
-./utils/csv.h
-./utils/CSVParser.h
-)
+include_directories(./robustModels)
+include_directories(./slam)
+include_directories(./utils)
 
 aux_source_directory(. SRC_LIST)
 aux_source_directory(./gnssNavigation SRC_LIST_gnssNavigation)
