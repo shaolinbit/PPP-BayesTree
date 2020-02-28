@@ -5,60 +5,61 @@
  */
 
 
-#include "nonlinear/ISAM2.h"
-#include "nonlinear/NonlinearFactorGraph.h"
-#include "inference/Symbol.h"
+#include "minisam/nonlinear/ISAM2.h"
+#include "minisam/nonlinear/NonlinearFactorGraph.h"
+#include "minisam/inference/Symbol.h"
 
-#include "slam/PriorFactor.h"
-#include "slam/BetweenFactor.h"
-#include "pppbayestree/gnssNavigation/GnssData.h"
-#include "pppbayestree/gnssNavigation/GnssTools.h"
-#include "pppbayestree/gnssNavigation/PhaseFactor.h"
-#include "pppbayestree/gnssNavigation/nonBiasStates.h"
-#include "pppbayestree/configReader/ConfDataReader.hpp"
+#include "minisam/slam/PriorFactor.h"
+#include "minisam/slam/BetweenFactor.h"
 
-#include "pppbayestree/gnssNavigation/PseudorangeFactor.h"
+#include "gnssNavigation/GnssData.h"
+#include "gnssNavigation/GnssTools.h"
+#include "gnssNavigation/PhaseFactor.h"
+#include "gnssNavigation/nonBiasStates.h"
+#include "configReader/ConfDataReader.hpp"
+
+#include "gnssNavigation/PseudorangeFactor.h"
 
 
 // GPSTK
-#include "pppbayestree/gpstk/MJD.hpp"
-#include "pppbayestree/gpstk/PowerSum.hpp"
-#include "pppbayestree/gpstk/Decimate.hpp"
-#include "pppbayestree/gpstk/SolidTides.hpp"
-#include "pppbayestree/gpstk/PoleTides.hpp"
-#include "pppbayestree/gpstk/TropModel.hpp"
-#include "pppbayestree/gpstk/BasicModel.hpp"
-#include "pppbayestree/gpstk/CommonTime.hpp"
-#include "pppbayestree/gpstk/PCSmoother.hpp"
-#include "pppbayestree/gpstk/OceanLoading.hpp"
-#include "pppbayestree/gpstk/CodeSmoother.hpp"
-#include "pppbayestree/gpstk/SimpleFilter.hpp"
-#include "pppbayestree/gpstk/MWCSDetector.hpp"
-#include "pppbayestree/gpstk/SatArcMarker.hpp"
-#include "pppbayestree/gpstk/DCBDataReader.hpp"
-#include "pppbayestree/gpstk/ComputeWindUp.hpp"
-#include "pppbayestree/gpstk/Rinex3NavData.hpp"
-#include "pppbayestree/gpstk/GNSSconstants.hpp"
-#include "pppbayestree/gpstk/ComputeLinear.hpp"
-#include "pppbayestree/gpstk/GPSWeekSecond.hpp"
-#include "pppbayestree/gpstk/LICSDetector2.hpp"
-#include "pppbayestree/gpstk/DataStructures.hpp"
-#include "pppbayestree/gpstk/RinexObsStream.hpp"
-#include "pppbayestree/gpstk/Rinex3ObsStream.hpp"
-#include "pppbayestree/gpstk/Rinex3NavStream.hpp"
-#include "pppbayestree/gpstk/ComputeTropModel.hpp"
-#include "pppbayestree/gpstk/SP3EphemerisStore.hpp"
-#include "pppbayestree/gpstk/ComputeSatPCenter.hpp"
-#include "pppbayestree/gpstk/EclipsedSatFilter.hpp"
-#include "pppbayestree/gpstk/GPSEphemerisStore.hpp"
-#include "pppbayestree/gpstk/CorrectCodeBiases.hpp"
-#include "pppbayestree/gpstk/ComputeSatPCenter.hpp"
-#include "pppbayestree/gpstk/RequireObservables.hpp"
-#include "pppbayestree/gpstk/CorrectObservables.hpp"
-#include "pppbayestree/gpstk/LinearCombinations.hpp"
-#include "pppbayestree/gpstk/GravitationalDelay.hpp"
-#include "pppbayestree/gpstk/PhaseCodeAlignment.hpp"
-#include "pppbayestree/slam/dataset.h"
+#include "gpstk/MJD.hpp"
+#include "gpstk/PowerSum.hpp"
+#include "gpstk/Decimate.hpp"
+#include "gpstk/SolidTides.hpp"
+#include "gpstk/PoleTides.hpp"
+#include "gpstk/TropModel.hpp"
+#include "gpstk/BasicModel.hpp"
+#include "gpstk/CommonTime.hpp"
+#include "gpstk/PCSmoother.hpp"
+#include "gpstk/OceanLoading.hpp"
+#include "gpstk/CodeSmoother.hpp"
+#include "gpstk/SimpleFilter.hpp"
+#include "gpstk/MWCSDetector.hpp"
+#include "gpstk/SatArcMarker.hpp"
+#include "gpstk/DCBDataReader.hpp"
+#include "gpstk/ComputeWindUp.hpp"
+#include "gpstk/Rinex3NavData.hpp"
+#include "gpstk/GNSSconstants.hpp"
+#include "gpstk/ComputeLinear.hpp"
+#include "gpstk/GPSWeekSecond.hpp"
+#include "gpstk/LICSDetector2.hpp"
+#include "gpstk/DataStructures.hpp"
+#include "gpstk/RinexObsStream.hpp"
+#include "gpstk/Rinex3ObsStream.hpp"
+#include "gpstk/Rinex3NavStream.hpp"
+#include "gpstk/ComputeTropModel.hpp"
+#include "gpstk/SP3EphemerisStore.hpp"
+#include "gpstk/ComputeSatPCenter.hpp"
+#include "gpstk/EclipsedSatFilter.hpp"
+#include "gpstk/GPSEphemerisStore.hpp"
+#include "gpstk/CorrectCodeBiases.hpp"
+#include "gpstk/ComputeSatPCenter.hpp"
+#include "gpstk/RequireObservables.hpp"
+#include "gpstk/CorrectObservables.hpp"
+#include "gpstk/LinearCombinations.hpp"
+#include "gpstk/GravitationalDelay.hpp"
+#include "gpstk/PhaseCodeAlignment.hpp"
+#include "slam/dataset.h"
 
 // BOOST
 #include <boost/filesystem.hpp>
@@ -99,7 +100,7 @@ int main(int argc, char* argv[])
     int nThreads(-1), phase_break, break_count(0), nextKey, dec_int, itsBelowThree=0, count=0;
     bool printECEF, printENU, printAmb, printUpdateRate, first_ob(true), usingP1(false);
 
-    FILE *fprealtime=fopen("../examples/pppbayestree/data/pppgpsposbackcount.txt","w+");
+    FILE *fprealtime=fopen("data/pppgpsposbackcount.txt","w+");
 
     cout.precision(12);
 
@@ -116,7 +117,7 @@ int main(int argc, char* argv[])
     po::notify(vm);*/
 
     ConfDataReader confReader;
-    confReader.open("../examples/pppbayestree/data/phastball.conf");
+    confReader.open("data/phastball.conf");
     ISAM2Data isam2data;
 
     /*if (confFile.empty() ) {
@@ -239,9 +240,9 @@ int main(int argc, char* argv[])
 
      GaussianNoiseModel* initNoise=new GaussianNoiseModel(init_Noise);
 
-    string obs_path = findExampleDataFile(gnssFile,"../examples/pppbayestree/data");
-    string p1p2_path = findExampleDataFile(p1p2File,"../examples/pppbayestree/data");
-    string p1c1_path = findExampleDataFile(p1c1File,"../examples/pppbayestree/data");
+    string obs_path = findExampleDataFile(gnssFile,"data");
+    string p1p2_path = findExampleDataFile(p1p2File,"data");
+    string p1c1_path = findExampleDataFile(p1c1File,"data");
 
 
 
@@ -263,11 +264,11 @@ int main(int argc, char* argv[])
     string delimiter = " ";
     while ((pos = sp3File.find(delimiter)) != string::npos)
     {
-        path = findExampleDataFile(sp3File.substr(0,pos),"examples_tuning/gpsdata");
+        path = findExampleDataFile(sp3File.substr(0,pos),"data");
         SP3EphList.loadFile(path);
         sp3File.erase(0, pos + delimiter.length());
     }
-    path = findExampleDataFile(sp3File,"examples_tuning/gpsdata");
+    path = findExampleDataFile(sp3File,"data");
     SP3EphList.loadFile(path);
 
     // Set flags to reject satellites with bad or absent positional
