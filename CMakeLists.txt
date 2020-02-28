@@ -8,7 +8,6 @@ SET(CMAKE_CXX_COMPILER g++)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -fpic -std=c11")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -fpic -std=c++11")
 
-
 find_package(Boost REQUIRED COMPONENTS
 filesystem  
 )
@@ -21,13 +20,351 @@ message("${Boost_INCLUDE_DIRS}")
 message("${Boost_LIBRARIES}")
 
 
+set(HEAD_FILES_configReader
+	./configReader/ConfDataReader.hpp
+)
 
-include_directories(./configReader)
 include_directories(./gnssNavigation)
-include_directories(./gpstk)
-include_directories(./robustModels)
-include_directories(./slam)
-include_directories(./utils)
+set(HEAD_FILES_gpstk
+	./gpstk/AllanDeviation.hpp
+	./gpstk/AlmOrbit.hpp
+	./gpstk/ANSITime.hpp
+	./gpstk/Antenna.hpp
+	./gpstk/AntexReader.hpp
+	./gpstk/ARBase.hpp
+	./gpstk/ARLambda.hpp
+	./gpstk/ARSimple.hpp
+	./gpstk/AstronomicalFunctions.hpp
+	./gpstk/Bancroft.hpp
+	./gpstk/BaseDistribution.hpp
+	./gpstk/BasicFramework.hpp
+	./gpstk/BasicModel.hpp
+	./gpstk/BDSEphemeris.hpp
+	./gpstk/BDSEphemerisStore.hpp
+	./gpstk/BDSWeekSecond.hpp
+	./gpstk/BinexData.hpp
+	./gpstk/BinexFilterOperators.hpp
+	./gpstk/BinexStream.hpp
+	./gpstk/BinUtils.hpp
+	./gpstk/BivarStats.hpp
+	./gpstk/BLQDataReader.hpp
+	./gpstk/BrcClockCorrection.hpp
+	./gpstk/BrcKeplerOrbit.hpp
+	./gpstk/CheckPRData.hpp
+	./gpstk/Chi2Distribution.hpp
+	./gpstk/CivilTime.hpp
+	./gpstk/ClockModel.hpp
+	./gpstk/ClockSatStore.hpp
+	./gpstk/CNAV2EphClk.hpp
+	./gpstk/CNAVClock.hpp
+	./gpstk/CNavDataElement.hpp
+	./gpstk/CNavDataElementStore.hpp
+	./gpstk/CNavEOP.hpp
+	./gpstk/CNAVEphemeris.hpp
+	./gpstk/CNavGGTO.hpp
+	./gpstk/CNavIC.hpp
+	./gpstk/CNavText.hpp
+	./gpstk/CNavUTC.hpp
+	./gpstk/CodeBuffer.hpp
+	./gpstk/CodeKalmanSolver.hpp
+	./gpstk/CodeSmoother.hpp
+	./gpstk/Combinations.hpp
+	./gpstk/CommandLine.hpp
+	./gpstk/CommandOption.hpp
+	./gpstk/CommandOptionParser.hpp
+	./gpstk/CommandOptionWithCommonTimeArg.hpp
+	./gpstk/CommandOptionWithPositionArg.hpp
+	./gpstk/CommandOptionWithTimeArg.hpp
+	./gpstk/CommonTime.hpp
+	./gpstk/compass_constants.hpp
+	./gpstk/ComputerDOP.hpp
+	./gpstk/ComputerLinear.hpp
+	./gpstk/ComputerSatPCenter.hpp
+	./gpstk/ComputerTropModel.hpp
+	./gpstk/ComputerWindup.hpp
+	./gpstk/ConfDataWriter.hpp
+	./gpstk/convhelp.hpp
+	./gpstk/CorrectCodeBiases.hpp
+	./gpstk/CorrectObservables.hpp
+	./gpstk/DataHeaders.hpp
+	./gpstk/DataStructures.hpp
+	./gpstk/DCBDataReader.hpp
+	./gpstk/Decimate.hpp
+	./gpstk/DOP.hpp
+	./gpstk/EclipseSatFilter.hpp
+	./gpstk/EllipsoidModel.hpp
+	./gpstk/EngAlmanac.hpp
+	./gpstk/EngEphemeris.hpp
+	./gpstk/EngNav.hpp
+	./gpstk/ENUUtil.hpp
+	./gpstk/EOPDataStore.hpp
+	./gpstk/EphemerisRange.hpp
+	./gpstk/Epoch.hpp
+	./gpstk/EpochModel.hpp
+	./gpstk/EpochDataStore.hpp
+	./gpstk/Exception.hpp
+	./gpstk/expandtilde.hpp
+	./gpstk/Expression.hpp
+	./gpstk/ExtractCombinationData.hpp
+	./gpstk/ExtractData.hpp
+	./gpstk/ExtractLC.hpp
+	./gpstk/ExtractPC.hpp
+	./gpstk/FFBinaryStream.hpp
+	./gpstk/FFData.hpp
+	./gpstk/FFStream.hpp
+	./gpstk/FFStreamError.hpp
+	./gpstk/FFTextStream.hpp
+	./gpstk/FICAStream.hpp
+	./gpstk/FICBase.hpp
+	./gpstk/FICData.hpp
+	./gpstk/FICData9.hpp
+	./gpstk/FICData62.hpp
+	./gpstk/FICData109.hpp
+	./gpstk/FICData162.hpp
+	./gpstk/FICFilterOperators.hpp
+	./gpstk/FICHeader.hpp
+	./gpstk/FICStream.hpp
+	./gpstk/FICStreamBase.hpp
+	./gpstk/FileFilter.hpp
+	./gpstk/FileFilterFrame.hpp
+	./gpstk/FileFilterFrameWithHeader.hpp
+	./gpstk/FileHunter.hpp
+	./gpstk/FileSpec.hpp
+	./gpstk/FileStore.hpp
+	./gpstk/FileUtils.hpp
+	./gpstk/FilterBase.hpp
+	./gpstk/FIRDifferentiator5thOrder.hpp
+	./gpstk/GalEphemeris.hpp
+	./gpstk/GalEphemerisStroe.hpp
+	./gpstk/GALWeekSecond.hpp
+	./gpstk/GaussianDistribution.hpp
+	./gpstk/GenXSequence.hpp
+	./gpstk/geometry.hpp
+	./gpstk/getopt.h
+	./gpstk/GloEphemeris.hpp
+	./gpstk/GloEphemerisStore.hpp
+	./gpstk/GloFreqindex.hpp
+	./gpstk/GNSSconstants.hpp
+	./gpstk/GPSAlmanacStore.hpp
+	./gpstk/gps_constants.hpp
+	./gpstk/GPSEllipsoid.hpp
+	./gpstk/GPSEphemeris.hpp
+	./gpstk/GPSEphemerisStore.hpp
+	./gpstk/GPSorbElemStore.hpp
+	./gpstk/gpstkplatform.h
+	./gpstk/GPS_URA.hpp
+	./gpstk/GPSWeek.hpp
+	./gpstk/GPSWeekSecond.hpp
+	./gpstk/GPSWeekZcount.hpp
+	./gpstk/GPSZcount.hpp
+	./gpstk/GravitationalDelay.hpp
+	./gpstk/HelmertTransform.hpp
+	./gpstk/InOutFramework.hpp
+	./gpstk/lonexBase.hpp
+	./gpstk/lonexData.hpp
+	./gpstk/lonexHeader.hpp
+	./gpstk/lonexStore.hpp
+	./gpstk/lonexStream.hpp
+	./gpstk/lonoModel.hpp
+	./gpstk/lonoModelStore.hpp
+	./gpstk/JulianDate.hpp
+	./gpstk/LICSDetector.hpp
+	./gpstk/LICSDetector.hpp
+	./gpstk/LinearClockModel.hpp
+	./gpstk/LinearCombinations.hpp
+	./gpstk/logstream.hpp
+	./gpstk/LoopedFramework.hpp
+	./gpstk/MainAdapter.hpp
+	./gpstk/MathBase.hpp
+	./gpstk/Matrix.hpp
+	./gpstk/MatrixBase.hpp
+	./gpstk/MatrixBaseOperators.hpp
+	./gpstk/MatrixFunctors.hpp
+	./gpstk/Matriximplementation.hpp
+	./gpstk/MatrixOperators.hpp
+	./gpstk/MemoryUtils.hpp
+	./gpstk/mergePCodeWords.h
+	./gpstk/MisMath.hpp
+	./gpstk/MJD.hpp
+	./gpstk/ModeledPseudorangeBase.hpp
+	./gpstk/ModelObs.hpp
+	./gpstk/ModelObsFixedStation.hpp
+	./gpstk/MoonPosition.hpp
+	./gpstk/MOPSweight.hpp
+	./gpstk/MSCBase.hpp
+	./gpstk/MSCData.hpp
+	./gpstk/MSCHeader.hpp
+	./gpstk/MSCStore.hpp
+	./gpstk/MSCStream.hpp
+	./gpstk/MWCSDetector.hpp
+	./gpstk/Namelist.hpp
+	./gpstk/NEDUtil.hpp
+	./gpstk/ObsClockModel.hpp
+	./gpstk/ObsEpochMap.hpp
+	./gpstk/ObsID.hpp
+	./gpstk/ObsIDInitializer.hpp
+	./gpstk/ObsRngDev.hpp
+	./gpstk/OceanLoading.hpp
+	./gpstk/OrbElem.hpp
+	./gpstk/OrbElemCNAV.hpp
+	./gpstk/OrbElemCNAV2.hpp
+	./gpstk/OrbElemFIC9.hpp
+	./gpstk/OrbElemFIC109.hpp
+	./gpstk/OrbElemICE.hpp
+	./gpstk/OrbElemLNav.hpp
+	./gpstk/OrbElemRinex.hpp
+	./gpstk/OrbElemStore.hpp
+	./gpstk/OrbitEph.hpp
+	./gpstk/OrbitEphStore.hpp
+	./gpstk/ORDEpoch.hpp
+	./gpstk/PackedNavBits.hpp
+	./gpstk/PCodeConst.hpp	
+	./gpstk/PCSmoother.hpp
+	./gpstk/PhaseCodeAlignment.hpp
+	./gpstk/PlanetEphemeris.hpp
+	./gpstk/PoleTides.hpp
+	./gpstk/PolyFit.hpp
+	./gpstk/Position.hpp
+	./gpstk/PositionSatStore.hpp
+	./gpstk/PowerSum.hpp
+	./gpstk/ProcessingClass.hpp
+	./gpstk/PRSolution.hpp
+	./gpstk/PRSolution2.hpp
+	./gpstk/PZ90Ellipsoid.hpp
+	./gpstk/QZSEphemeris.hpp
+	./gpstk/QZSEphemerisStore.hpp
+	./gpstk/QZSWeekSecond.hpp
+	./gpstk/RACRotation.hpp
+	./gpstk/ReferenceFrame.hpp
+	./gpstk/RequireObservables.hpp
+	./gpstk/Rinex3ClockBase.hpp
+	./gpstk/Rinex3ClockData.hpp
+	./gpstk/Rinex3ClockHeader.hpp
+	./gpstk/Rinex3ClockStream.hpp
+	./gpstk/Rinex3EphemerisStore.hpp
+	./gpstk/Rinex3NavBase.hpp
+	./gpstk/Rinex3NavData.hpp
+	./gpstk/Rinex3NavFilterOperators.hpp
+	./gpstk/Rinex3NavHeader.hpp
+	./gpstk/Rinex3NavStream.hpp
+	./gpstk/Rinex3ObsBase.hpp
+	./gpstk/Rinex3ObsData.hpp
+	./gpstk/Rinex3ObsFilterOperators.hpp
+	./gpstk/Rinex3ObsHeader.hpp
+	./gpstk/Rinex3ObsStream.hpp
+	./gpstk/RinexClockBase.hpp
+	./gpstk/RinexClockData.hpp
+	./gpstk/RinexClockHeader.hpp
+	./gpstk/RinexClockStore.hpp
+	./gpstk/RInexClockStream.hpp
+	./gpstk/RinexEphemerisStore.hpp
+	./gpstk/RinexMetBase.hpp
+	./gpstk/RinexMetData.hpp
+	./gpstk/RinexMetFilterOperators.hpp
+	./gpstk/RinexMetHeader.hpp
+	./gpstk/RinexMetStream.hpp
+	./gpstk/RinexNavBase.hpp
+	./gpstk/RinexNavData.hpp
+	./gpstk/RinexNavFilterOperators.hpp
+	./gpstk/RinexNavHeader.hpp
+	./gpstk/RinexNavStream.hpp
+	./gpstk/RinexObsBase.hpp
+	./gpstk/RinexObsData.hpp
+	./gpstk/RinexObsFilterOperators.hpp
+	./gpstk/RinexObsHeader.hpp
+	./gpstk/RInexObsID.hpp
+	./gpstk/RinexObsStream.hpp
+	./gpstk/RinexSatID.hpp
+	./gpstk/RinexUtilities.hpp
+	./gpstk/RK4VehicleModel.hpp
+	./gpstk/RTFileFrame.hpp
+	./gpstk/RungeKutta4.hpp
+	./gpstk/SatArcMarker.hpp
+	./gpstk/SatArcMarker.hpp
+	./gpstk/SatDataReader.hpp
+	./gpstk/SatID.hpp
+	./gpstk/SEMAlmanacStore.hpp
+	./gpstk/SEMBase.hpp
+	./gpstk/SEMData.hpp
+	./gpstk/SEMHeader.hpp
+	./gpstk/SEMStream.hpp
+	./gpstk/SimpleFilter.hpp
+	./gpstk/SimplelURAWeight.hpp
+	./gpstk/SimpleKalmanFilter.hpp
+	./gpstk/singleton.hpp
+	./gpstk/SMODFData.hpp
+	./gpstk/SMODFStream.hpp
+	./gpstk/SolidTides.hpp
+	./gpstk/SolverBase.hpp
+	./gpstk/SolverLMS.hpp
+	./gpstk/SolverPPP.hpp
+	./gpstk/SourceID.hpp
+	./gpstk/SP3Base.hpp
+	./gpstk/SP3Data.hpp
+	./gpstk/SP3EphemerisStore.hpp
+	./gpstk/SP3Header.hpp
+	./gpstk/SP3SatID.hpp
+	./gpstk/SP3Stream.hpp
+	./gpstk/SpecialFunctions.hpp
+	./gpstk/Stats.hpp
+	./gpstk/stl_helpers.hpp
+	./gpstk/StochasticModel.hpp
+	./gpstk/StreamBuf.hpp
+	./gpstk/StringUtils.hpp
+	./gpstk/StudentDistribution.hpp
+	./gpstk/SunPosition.hpp
+	./gpstk/SVExclusionList.hpp
+	./gpstk/SVNumXRef.hpp
+	./gpstk/SVPCodeGen.hpp
+	./gpstk/SystemTime.hpp
+	./gpstk/TabularSatStore.hpp
+	./gpstk/TimeConstants.hpp
+	./gpstk/TimeConverters.hpp
+	./gpstk/TimeNameFileStream.hpp
+	./gpstk/TimeString.hpp
+	./gpstk/TimeSystem.hpp
+	./gpstk/TimeSystemCorr.hpp
+	./gpstk/TimeTag.hpp
+	./gpstk/Tripe.hpp
+	./gpstk/TropModel.hpp
+	./gpstk/TypeID.hpp
+	./gpstk/UnixTime.hpp
+	./gpstk/ValidType.hpp
+	./gpstk/Vector.hpp
+	./gpstk/VectorBase.hpp
+	./gpstk/VectorBaseOperators.hpp
+	./gpstk/VectorOperators.hpp
+	./gpstk/Week.hpp
+	./gpstk/WeekSecond.hpp
+	./gpstk/WeightBase.hpp
+	./gpstk/WGS84Ellipsoid.hpp
+	./gpstk/WxObsMap.hpp
+	./gpstk/X1Sequence.hpp
+	./gpstk/X2Sequence.hpp
+	./gpstk/Xv.hpp
+	./gpstk/Xvt.hpp
+	./gpstk/XvtStore.hpp
+	./gpstk/XYZ2NED.hpp
+	./gpstk/XYZ2NEU.hpp
+	./gpstk/YDSTime.hpp
+	./gpstk/YumaBase.hpp
+	./gpstk/YumaData.hpp
+	./gpstk/YumaHeader.hpp
+	./gpstk/YumaStream.hpp
+)
+
+set(HEAD_FILES_robustModels
+	./robustModels/PseudorangeMaxMix.h
+	./robustModels/PseudorangeSwitchFactor.h
+)
+set(HEAD_FILES_slam
+	./slam/dataset.h
+)
+set(HEAD_FILES_utils
+	./utils/csv.h
+	./utils/CSVParser.h
+)
+
 
 aux_source_directory(. SRC_LIST)
 aux_source_directory(./gnssNavigation SRC_LIST_gnssNavigation)
@@ -37,11 +374,11 @@ aux_source_directory(./robustModels SRC_LIST_robustModels)
 aux_source_directory(./slam SRC_LIST_slam)
 aux_source_directory(./utils SRC_LIST_utils)
 
-
-
 include_directories(/usr/include/minisam/)
 
-add_executable(pppbayestree ${SRC_LIST} ${SRC_LIST_gnssNavigation} ${SRC_LIST_configReader} ${SRC_LIST_gpstk} ${SRC_LIST_robustModels} ${SRC_LIST_slam} ${SRC_LIST_utils} ${Boost_LIBRARIES} /usr/lib/libminisam.so)
-target_link_libraries(pppbayestree ${SRC_LIST} ${SRC_LIST_gnssNavigation} ${SRC_LIST_configReader} ${SRC_LIST_gpstk} ${SRC_LIST_robustModels} ${SRC_LIST_slam} ${SRC_LIST_utils} ${Boost_LIBRARIES} /usr/lib/libminisam.so)
+
+add_executable(pppbayestree ${SRC_LIST} ${SRC_LIST_utils} ${SRC_LIST_configReader}  ${SRC_LIST_gnssNavigation} ${SRC_LIST_gpstk} ${SRC_LIST_robustModels} ${SRC_LIST_slam} ${SRC_LIST_utils} /usr/lib/libminisam.so)
+target_link_libraries(pppbayestree  ${Boost_LIBRARIES} /usr/lib/libminisam.so)
+
 
 
