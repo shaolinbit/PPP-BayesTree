@@ -29,12 +29,15 @@ If you utilze this software for an academic purpose, please consider using the f
 #### Required
 * Boost -->  ```` sudo apt-get install libboost-all-dev ````
 * CMake -->  ```` sudo apt-get install cmake ````
-* minisam --> ````git clone https://github.com/shaolinbit/minisam_lib.git
+* minisam -->
+````bash
+		  git clone https://github.com/shaolinbit/minisam_lib.git
 		  cd minisam_lib
 		  mkdir build
 		  cd build
 		  cmake ..
-		  make install ````
+		  make install
+```` 
 #### Recommended
 * Intel TBB -->  ```` sudo apt-get install libtbb-dev ````
 * [Intel MKL](https://software.intel.com/en-us/mkl)
@@ -68,7 +71,7 @@ Using the provided data-set, the PPP Bayes tree example can be utilized as shown
 
 ````bash
 cd ../data
-./../build/pppBayesTree -c phastball.conf
+./../build/pppbayesTree -c phastball.conf
 ````
 
 ![error](https://lh3.googleusercontent.com/I8a6-1VtvxDhnbevI8Dgpa4slTOZPvLQ0m-3DL7q9c8pGrUitAVyNEKReoimNAJ-udGi4h-kSHhJIOP_9HqBNu2vlP6L73DYXuwH-n9LGpPPxnHXoYoDURsrfC7jZyFGELTMhVlMUFPm_ir4WMdEdsQpv5_2Kp8MXpUfBGaRUA8vaBwXnvCAT6xfwUje7GQECsqjlaf90s9FChDKHqHjP8f8HsiVdLGXbf6QBb4WSkeYduBZMebV89hYT-gcSs3MdCkcmLUUJBfv07PgZjsGMSvj04bz79qW_C2_McfTdnUcn70-oKOsfIe4gJC7V_5zCL7-9j6sxjIh4eXrfpaGrOICqtUr7GKpGPDQ22bpRtehqsFOg5sOQIvjDn3p91JGvTq5WWTP4GuCqb4yR5I3EAh-vRTvHMOwJhfglcxnl1mvyGrwwIOK7q6IacaBu9EyEnL-UG5FG6NiZ-jCE4D1l1ou7QYVE-c9-kzkFeL-s-Mqzq64sH7Sta0_qgS3ZzaZWSyctV17xZH7Vv7FDei_i0B7RvI9FGAWzeaLXJNqdL49VDDEhHfSLxeFZqZAkdgPqeCFxv2U64rsIbaRWo7e4mam4547fuYeq6PWcpblJ6AqZdRAeKZWBmJa9IFjV32UdC46QioXhRfI5Qt9VC8bq4CcDpnsyw1a=w960-h475-no)

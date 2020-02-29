@@ -39,7 +39,7 @@ std::string findExampleDataFile(const string& name,const std::string& path)
 
     // Constants below are defined by CMake, see gtsam/gtsam/CMakeLists.txt
     //rootsToSearch.push_back("examples_tuning\\gpsdata");//windows setting.
-    rootsToSearch.push_back("../examples/pppbayestree/data");//ubuntu setting.
+    rootsToSearch.push_back("../data");//ubuntu setting.
     rootsToSearch.push_back(path);
 
     // Search for filename as given, and with .graph and .txt extensions

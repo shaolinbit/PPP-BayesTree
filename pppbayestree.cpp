@@ -100,7 +100,7 @@ int main(int argc, char* argv[])
     int nThreads(-1), phase_break, break_count(0), nextKey, dec_int, itsBelowThree=0, count=0;
     bool printECEF, printENU, printAmb, printUpdateRate, first_ob(true), usingP1(false);
 
-    FILE *fprealtime=fopen("data/pppgpsposbackcount.txt","w+");
+    FILE *fprealtime=fopen("../data/pppgpsposbackcount.txt","w+");
 
     cout.precision(12);
 
@@ -117,7 +117,7 @@ int main(int argc, char* argv[])
     po::notify(vm);*/
 
     ConfDataReader confReader;
-    confReader.open("data/phastball.conf");
+    confReader.open("../data/phastball.conf");
     ISAM2Data isam2data;
 
     /*if (confFile.empty() ) {
